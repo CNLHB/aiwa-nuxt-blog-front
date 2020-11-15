@@ -18,11 +18,13 @@ export default ({store, redirect})=>{
     })
   service.interceptors.response.use(response => {
       let {data} = response
-      console.log()
-      if (data.code == 0){
+      if (data.code == 0 ){
         // 正常返回
         return data
       }else{
+        if (data.code ==10004){
+          return data
+        }
         // token过期
         MessageBox.confirm('登录已过期','过期' ,{
           confirmButtonText: '登录',
@@ -30,9 +32,12 @@ export default ({store, redirect})=>{
           type: 'warning'
         }).then(()=>{
           window.localStorage.removeItem('token')
+          let path = window.location.pathname
+          if(path!== '/'){
+            redirect({path: "/login"})
+          }
           //跳转到登录页
-          redirect({path: "/login"})
-        })
+        }).catch(err => err)
       }
     },
     err => {

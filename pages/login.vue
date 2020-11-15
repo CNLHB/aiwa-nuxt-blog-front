@@ -73,6 +73,11 @@ export default {
         setTimeout(()=>{
           this.$router.push({path:"/"})
         },1000)
+      }else {
+        this.$notify({
+          title:'账号或密码错误',
+          type:'error'
+        })
       }
       return
       // let ret = await this.$http.post('/user/login',{

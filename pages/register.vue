@@ -147,6 +147,9 @@ export default {
             nickname:this.form.nickname
           }
           let ret = await this.$http.post('/user/register',obj)
+          setTimeout(()=>{
+            this.$router.push({path:"/login"})
+          },1000)
           console.log(ret)
         }
       })
